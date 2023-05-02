@@ -1,0 +1,18 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Counter from './Counter.svelte';
+
+//session
+
+---
+
+<Layout title="Welcome to Astro.">
+	<div class="container">
+		<h3>test</h3>
+		<hr />
+		<Counter client:only="svelte" />
+	</div>
+</Layout>
+
+<style>
+</style>

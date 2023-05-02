@@ -1,0 +1,51 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import LibCrud from '../../../lib/LibCrud';
+import type { Post } from '../index.astro';
+
+//
+const { id } = Astro.params;
+console.log(id);
+let item: any = await LibCrud.get(Number(id));
+console.log(item);
+---
+<!-- -->
+<style>
+</style>
+
+<!-- MarkUp -->
+<Layout title="Welcome to Astro.">
+	<main class="container">
+		<a class="btn btn-outline-primary" href={`/gpt`}>Back</a>
+		<hr />		
+		<h1>CrudEdit</h1>
+		<p>Id:{id}</p>
+		<hr />
+		<div class="col-sm-6">
+			<input type="hidden" value={id} id="item_id" />
+			<input type="hidden" value={item.completed} id="item_completed" />
+			<div>
+				<label for="title">タイトル</label>
+				<input type="text" id="title" name="title" required 
+				value={item.title}>
+			</div>
+			<div>
+				<label for="content">内容</label>
+				<textarea id="content" name="content" required
+				>{item.content}</textarea>
+			</div>
+			<div>
+			<label for="completed">完了フラグ</label>
+				<input type="checkbox" id="completed" name="completed" value="1">
+			</div>
+			<hr />			
+			<button id="btn_save" class="btn btn-primary">Save</button>
+		</div>
+	</main>
+</Layout>
+<!-- -->
+<script src="../CrudEdit.ts"></script>
+
+<!--
+	
+ -->

@@ -1,0 +1,42 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CrudIndex from './CrudIndex';
+
+console.log("#index");
+const taskList = await CrudIndex.getList();
+console.log(taskList);
+---
+
+<Layout title="Welcome to Astro.">
+	<main class="container">
+		<a href={`/`}>[ Top ]</a>
+		<hr />		
+		<a href={`/gpt/create`} class="btn btn-primary">Create</a>
+		<hr />
+		<h1>GPT</h1>
+		<hr />
+		<ul>
+		{
+		taskList.map((item) => (
+			<li><h3>{item.title}</h3>
+				ID: {item.id}
+				<a href={`/gpt/show/${item.id}`} class="btn btn-sm btn-outline-primary"
+				>Show</a>
+				<a href={`/gpt/edit/${item.id}`} class="btn btn-sm btn-outline-primary"
+				>Edit</a>
+				<hr />
+			</li>
+		))
+		}
+		</ul>		
+	</main>
+</Layout>
+<!-- -->
+<style>
+</style>
+<!-- -->
+<script src="./CrudIndex.ts"></script>
+
+<!--
+
+ -->

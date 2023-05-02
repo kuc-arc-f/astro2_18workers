@@ -1,0 +1,35 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Welcome to Astro.">
+	<main class="container">
+		<a href={`/`}>[ Top ]</a>
+		<hr />
+		<h1>Basic Login</h1>
+		<hr />
+		<p class="instructions">
+		</p>
+		<div class="form-group col-sm-6">
+			<label>Name:
+			</label>
+			<input type="text" class="form-control" name="user_name" id="user_name" />
+			<br />
+			<label>Password:
+			</label>
+			<input type="password" class="form-control" name="password" id="password" />
+			<hr />
+			<button id="btn_login" class="btn btn-primary">Login</button><br />
+			<hr />
+			<!-- 
+			<a class="btn btn-outline-primary my-2" href="/user/create">User Create</a>
+			 -->
+		</div>		
+	</main>
+</Layout>
+
+<!-- -->
+<script src="./Login.ts"></script>
+
+<style>
+</style>
