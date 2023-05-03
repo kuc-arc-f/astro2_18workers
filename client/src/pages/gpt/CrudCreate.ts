@@ -1,8 +1,7 @@
-import LibCrud from '../../lib/LibCrud';
-import LibAuth from '../../lib/LibAuth';
+//import LibCrud from '../../lib/LibCrud';
 import LibConfig from '../../lib/LibConfig';
-//import { trpc } from '../../utils/trpc';
 import Crud from './Crud';
+import HttpCommon from '../../lib/HttpCommon';
 //
 const CrudCreate = {
 
@@ -16,23 +15,13 @@ const CrudCreate = {
   {
     try{
       let ret = false;
-      const url = import.meta.env.PUBLIC_API_URL;
-      console.log("url=", url);
       let values = Crud.getInputValues();
 //console.log(values);
-//return;
-      const body = JSON.stringify(values);		
-      const res = await fetch(url + '/todos/create', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},      
-        body: body
-      });
-      const json = await res.json()
-      console.log(json);   
-      if (res.status !== 200) {
-        throw new Error(await res.text());
+      const json = await HttpCommon.post(values, '/todos/create');
+console.log(json);
+      if (json.ret ===  LibConfig.OK_CODE) {
+        ret = true;
       } 
-      ret = true;
       return ret;
     } catch (e) {
       console.error("Error, addItem");
@@ -55,7 +44,7 @@ const CrudCreate = {
       button.addEventListener('click', async () => {
         const result = await this.addItem();
         console.log("result=", result);
-        if(result) {
+        if(result === true) {
           window.location.href = '/gpt';
         }
       }); 

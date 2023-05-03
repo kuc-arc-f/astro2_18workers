@@ -1,5 +1,7 @@
 import LibCrud from '../../lib/LibCrud';
-
+import LibConfig from '../../lib/LibConfig';
+import HttpCommon from '../../lib/HttpCommon';
+//
 const CrudIndex = {
   /**
   * getList
@@ -10,25 +12,15 @@ const CrudIndex = {
   getList :async function (): Promise<any>
   {
     try{
-      const url = import.meta.env.PUBLIC_API_URL;
-console.log("#getList:" + url);
+      const json = await HttpCommon.post({}, "/todos/get_list");
+//console.log(json);      
       let items: any[] = [];
-      const body = JSON.stringify({});		
-      const res = await fetch(url + "/todos/get_list", {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},      
-        body: body
-      });
-      const json = await res.json()
-      console.log(json);   
-      if (res.status !== 200) {
-        throw new Error(await res.text());
-      } 
       items = json.data;
-console.log(items);
+//console.log(items);
       return items;
     } catch (e) {
       console.error(e);
+      throw new Error("Error, getList");
     } 
   }  ,  
   /**

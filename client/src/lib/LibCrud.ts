@@ -1,6 +1,7 @@
 import LibAuth from './LibAuth';
 import LibConfig from './LibConfig';
-
+import HttpCommon from './HttpCommon';
+//
 const LibCrud = {
   /**
    * validLogin:
@@ -47,21 +48,11 @@ console.log(items);
   get: async function(id: number) : Promise<any>
   {
     try{
-      const url = import.meta.env.PUBLIC_API_URL;
       let item: any = {
         "id": id
       };
-      const body = JSON.stringify(item);		
-      const res = await fetch(url + "/todos/get", {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},      
-        body: body
-      });
-      const json = await res.json()
-      console.log(json);   
-      if (res.status !== 200) {
-        throw new Error(await res.text());
-      } 
+      const json = await HttpCommon.post(item, "/todos/get");
+//console.log(json);       
       item = json.data;
 //console.log(item);
       return item;      

@@ -4,7 +4,7 @@ import CrudIndex from './CrudIndex';
 
 console.log("#index");
 const taskList = await CrudIndex.getList();
-console.log(taskList);
+//console.log(taskList);
 ---
 
 <Layout title="Welcome to Astro.">
@@ -13,7 +13,7 @@ console.log(taskList);
 		<hr />		
 		<a href={`/gpt/create`} class="btn btn-primary">Create</a>
 		<hr />
-		<h1>GPT</h1>
+		<h1>Todos</h1>
 		<hr />
 		<ul>
 		{

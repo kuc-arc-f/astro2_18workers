@@ -1,7 +1,7 @@
 import LibCrud from '../../lib/LibCrud';
 import LibConfig from '../../lib/LibConfig';
-//import { trpc } from '../../utils/trpc';
-
+import HttpCommon from '../../lib/HttpCommon';
+//
 const Crud = {
   /**
    * delete:
@@ -13,24 +13,17 @@ const Crud = {
   {
     try{
       let ret = false;
-      const url = import.meta.env.PUBLIC_API_URL;
-      console.log("url=", url); 
+//      const url = import.meta.env.PUBLIC_API_URL;
+//      console.log("url=", url); 
       const item = {
         id: id
       }
-console.log(item);
-      const body = JSON.stringify(item);		
-      const res = await fetch(url + '/todos/delete', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},      
-        body: body
-      });
-      const json = await res.json()
-      console.log(json);   
-      if (res.status !== 200) {
-        throw new Error(await res.text());
-      } 
-      ret = true;
+//console.log(item);
+      const json = await HttpCommon.post(item, '/todos/delete');
+//console.log(json);
+      if (json.ret ===  LibConfig.OK_CODE) {
+        ret = true;
+      }      
       return ret;      
     } catch (e) {
       console.error(e);
