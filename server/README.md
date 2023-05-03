@@ -6,7 +6,7 @@
 
  date    : 2023/05/02 
 
- update  :
+ update  : 2023/05/03
 
 ***
 ### Summary
@@ -14,18 +14,19 @@
 cloudflare D1 + workers + hono, API sample
 
 ***
+### Setup
+
+* wrangler.toml, API_KEY set
+
+```
+[vars]
+API_KEY = "hoge123"
+```
+***
 ### Start
 
 ```
 npm i
-
-#start-dev
-
-yarn  dev
-
-# build
-
-yarn build
 ```
 
 ***

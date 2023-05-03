@@ -1,9 +1,7 @@
 import { Hono } from "hono";
-import type { Database } from '@cloudflare/d1'
+import { Env } from '../index'
+import DbCommon from '../lib/DbCommon';
 
-interface Env {
-  DB: Database
-}
 const router = new Hono<Env>()
 const retObj = {ret: "NG", data: [], message: "Error, Internal Server Error"};
 
@@ -23,7 +21,11 @@ router.post("/create", async (c) => {
       VALUES('${body.title}', '${body.content}', 0);
       `;
 console.log(sql);
-      await c.env.DB.prepare(sql).run();
+      const resulte = await DbCommon.execute(sql, c, body);
+      if(resulte !== true) {
+        console.error("Error, /create");
+        throw new Error('Error , create');
+      }      
     }
     return c.json({ret: "OK", data: body});
   } catch (e) {
@@ -48,11 +50,13 @@ console.log(body);
       completed = '${body.completed}'
       WHERE id = ${body.id}
       `;
-      console.log(sql);
-      await c.env.DB.prepare(sql).run();
+//      console.log(sql);
+      const resulte = await DbCommon.execute(sql, c, body);
+      if(resulte !== true) {
+        console.error("Error, /update");
+        throw new Error('Error , update');
+      }        
     }
-/*
-*/
     return c.json({ret: "OK", data: body});
   } catch (e) {
     console.error(e);
@@ -68,13 +72,16 @@ console.log(body);
 router.post("/delete", async (c) => {
   try{
     const body = await c.req.json();
-    //console.log(body);
     if (body) {
       const sql = `
       DELETE FROM todos WHERE id = ${body.id}
       `;
       //console.log(sql);
-      await c.env.DB.prepare(sql).run();
+      const resulte = await DbCommon.execute(sql, c, body);
+      if(resulte !== true) {
+        console.error("Error, /delete");
+        throw new Error('Error , delete');
+      }        
     }
     return c.json({ret: "OK", data: body});    
   } catch (e) {
@@ -94,20 +101,18 @@ router.post("/get", async (c) => {
     let item = {};
     const body = await c.req.json();
     console.log(body);
-    let result: any = {};  
     if (body) {
-      result = await c.env.DB.prepare(
-      `
+      const sql = `
       SELECT * FROM todos
       WHERE id = ${body.id}
-      `
-      ).all();
-    console.log(result.results);
-      if(result.results.length < 1) {
+      `;
+      const resulte = await DbCommon.select(sql, c, body);
+//console.log(resulte);
+      if(resulte.length < 1) {
         console.error("Error, results.length < 1");
         throw new Error('Error , get');
       }
-      item = result.results[0];
+      item = resulte[0];
     }
     return c.json({ret: "OK", data: item});
   } catch (e) {
@@ -123,23 +128,21 @@ router.post("/get", async (c) => {
 */ 
 router.post("/get_list", async (c) => {
   try{
-    let item = {};
     const body = await c.req.json();
-    console.log(body);
-    let result: any = {};  
+    //console.log(body);
+    let resulte: any = [];  
     if (body) {
-      result = await c.env.DB.prepare(
-      `
+      const sql = `
       SELECT * FROM todos
       ORDER BY id DESC
-      `
-      ).all();
-    console.log(result.results);
-      if(result.results.length < 1) {
+      `;
+      resulte = await DbCommon.select(sql, c, body);
+      //console.log(resulte);
+      if(resulte.length < 1) {
         console.error("Error, results.length < 1");
       }
     }
-    return c.json({ret: "OK", data: result.results});
+    return c.json({ret: "OK", data: resulte});
   } catch (e) {
     console.error(e);
     return c.json(retObj);

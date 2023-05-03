@@ -11,6 +11,7 @@ INSERT INTO Customers (CompanyName, ContactName) VALUES ('Alfreds Futterkiste', 
 INSERT INTO Customers (CompanyName, ContactName) VALUES ('Around the Horn', 'Thomas Hardy');
 INSERT INTO Customers (CompanyName, ContactName) VALUES ('Bs Beverages', 'Victoria Ashworth');
 
+DROP TABLE IF EXISTS todos;
 CREATE TABLE todos (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   createdAt TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

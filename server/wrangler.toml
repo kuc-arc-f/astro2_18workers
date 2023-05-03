@@ -1,0 +1,7 @@
+name = "d1-project4"
+main = "src/index.ts"
+compatibility_date = "2023-05-03"
+
+[vars]
+API_KEY = "hoge123"
+

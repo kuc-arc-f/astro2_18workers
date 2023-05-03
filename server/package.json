@@ -1,5 +1,5 @@
 {
-  "name": "d1-project3",
+  "name": "d1-project4",
   "version": "0.0.0",
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230404.0",
@@ -15,6 +15,6 @@
     "test": "vitest"
   },
   "dependencies": {
-    "hono": "^3.1.7"
+    "hono": "^3.1.8"
   }
 }
